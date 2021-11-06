@@ -89,6 +89,14 @@ export default function Home() {
                 ),
             },
           ]}
+          options={{
+            actionsColumnIndex: -1,
+          }}
+          localization={{
+            header: {
+              actions: "Acciones",
+            },
+          }}
         >
           <h1>Mi Primera tabla en react</h1>
         </MaterialTable>
