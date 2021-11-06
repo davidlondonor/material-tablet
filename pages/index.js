@@ -2,8 +2,15 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import MaterialTable from "material-table";
+// import Edit from "@material-ui/icons/Edit";
+// import { forwardRef } from "react";
 
 export default function Home() {
+  // const tableIcons = {
+  //   Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+  //   Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+  // };
+
   const columnas = [
     {
       title: "Artista",
@@ -62,14 +69,54 @@ export default function Home() {
         <h1 className={styles.title}>Data Table con Material</h1>
 
         <p>Versión Mobile </p>
-        <MaterialTable columns={columnas} data={data}>
+        <MaterialTable
+          columns={columnas}
+          data={data}
+          title="Artistas más vendedores en el mundo"
+          actions={[
+            {
+              icon: "edit",
+              tooltip: "editar artista",
+              onclick: (event, rowData) =>
+                alert("Has editado el artista: " + rowData.artista),
+            },
+            {
+              icon: "delete",
+              tooltip: "Eliminar artista",
+              onclick: (event, rowData) =>
+                window.confirm(
+                  "Has editado el artista: " + rowData.artista + "?"
+                ),
+            },
+          ]}
+        >
           <h1>Mi Primera tabla en react</h1>
         </MaterialTable>
       </main>
       <div className={styles.dataDesk}>
         <p>Versión Escritorio </p>
 
-        <MaterialTable columns={columnas} data={data}>
+        <MaterialTable
+          columns={columnas}
+          data={data}
+          title="Artistas más vendedores en el mundo"
+          actions={[
+            {
+              icon: "edit",
+              tooltip: "editar artista",
+              onclick: (event, rowData) =>
+                alert("Has editado el artista: " + rowData.artista),
+            },
+            {
+              icon: "delete",
+              tooltip: "Eliminar artista",
+              onclick: (event, rowData) =>
+                window.confirm(
+                  "Has editado el artista: " + rowData.artista + "?"
+                ),
+            },
+          ]}
+        >
           <h1>Mi Primera tabla en react</h1>
         </MaterialTable>
       </div>
