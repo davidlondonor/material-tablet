@@ -1,78 +1,47 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import MaterialTable from "material-table";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Modal, TextField, Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
+import { resetServerContext } from "react-beautiful-dnd";
+
+const colums = [
+  {
+    title: "Artista",
+    field: "artista",
+  },
+  {
+    title: "País de origen",
+    field: "pais",
+  },
+  {
+    title: "Genero(s)",
+    field: "genero",
+  },
+  {
+    title: "Ventas estimadas (en millones)",
+    field: "ventas",
+    type: "numeric",
+  },
+];
+const baseUrl = "https://rickandmortyapi.com/api/character";
 
 export default function Home() {
-  const columnas = [
-    {
-      title: "Artista",
-      field: "artista",
-    },
-    {
-      title: "País de origen",
-      field: "pais",
-    },
-    {
-      title: "Genero(s)",
-      field: "genero",
-    },
-    {
-      title: "Ventas estimadas (en millones)",
-      field: "ventas",
-      type: "numeric",
-    },
-  ];
+  const [data, setData] = useState([]);
+  resetServerContext();
+  const peticionGet = async () => {
+    await axios.get(baseUrl).then((response) => {
+      setData(response.data);
+      console.log(baseUrl, "url -------->");
+    });
+  };
 
-  const data = [
-    {
-      artista: "The Beatles",
-      pais: "Reuno Unido",
-      genero: "Rock, pop",
-      ventas: 1000,
-    },
-    {
-      artista: "Elvis Presley",
-      pais: "USA",
-      genero: "Rock",
-      ventas: 345,
-    },
-    {
-      artista: "Juanes",
-      pais: "Medellín",
-      genero: "Rock, pop",
-      ventas: 4543,
-    },
-    {
-      artista: "Aterciopelados",
-      pais: "Colombia",
-      genero: "Rock",
-      ventas: 100,
-    },
-    {
-      artista: "The Beatles",
-      pais: "Reuno Unido",
-      genero: "Rock, pop",
-      ventas: 1000,
-    },
-    {
-      artista: "Elvis Presley",
-      pais: "USA",
-      genero: "Rock",
-      ventas: 345,
-    },
-    {
-      artista: "Juanes",
-      pais: "Medellín",
-      genero: "Rock, pop",
-      ventas: 4543,
-    },
-    {
-      artista: "Aterciopelados",
-      pais: "Colombia",
-      genero: "Rock",
-      ventas: 100,
-    },
-  ];
+  useEffect(() => {
+    peticionGet();
+    resetServerContext();
+  }, []);
 
   const pageOptions = {
     rowsPerPageText: "Filas por página",
@@ -97,7 +66,7 @@ export default function Home() {
 
         <p>Versión Mobile </p>
         <MaterialTable
-          columns={columnas}
+          columns={colums}
           data={data}
           title="Artistas más vendedores en el mundo"
           pagination
@@ -134,9 +103,11 @@ export default function Home() {
         <p>Versión Escritorio </p>
 
         <MaterialTable
-          columns={columnas}
+          columns={colums}
           data={data}
           title="Artistas más vendedores en el mundo"
+          pagination
+          paginationComponentOptions={pageOptions}
           actions={[
             {
               icon: "edit",
