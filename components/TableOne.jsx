@@ -129,6 +129,9 @@ const TableOne = () => {
         title="Título de la Tabla"
         columns={columns}
         data={tableData}
+        editable={{
+          onRowAdd: (newRow) => new Promise((resolve, reject) => {}),
+        }}
         options={{
           sorting: true,
           filtering: true,
@@ -140,6 +143,8 @@ const TableOne = () => {
           paginationPosition: "both",
           exportButton: true,
           exportAllData: true,
+          addRowPosition: "first",
+          actionsCellStyle: -1,
         }}
       />
     </>
